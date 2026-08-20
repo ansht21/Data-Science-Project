@@ -1,96 +1,158 @@
 # Sentiment Analysis — Tweet Classification
 
-> NLP pipeline that classifies social media posts as positive, negative, or neutral using TF-IDF features and logistic regression.
+Professional NLP pipeline for tweet sentiment classification using TF-IDF and Logistic Regression.
 
-![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikit-learn&logoColor=white)
-![NLTK](https://img.shields.io/badge/NLTK-154F5B?style=flat-square&logo=python&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=pandas&logoColor=white)
+Result: 71% accuracy, 0.70 weighted F1
 
-**Result: 71% accuracy · 0.70 weighted F1**
+## Project Structure
 
----
+sentiment_Analysis_project/
+├── src/
+│   ├── __init__.py
+│   ├── data.py
+│   ├── model.py
+│   └── utils.py
+├── data/
+│   ├── raw/
+│   └── processed/
+├── models/
+├── dataset/
+├── notebooks/
+│   └── sentiment_analysis.ipynb
+├── tests/
+│   └── test_basic.py
+├── requirements.txt
+└── README.md
 
-## Problem
+## Problem Statement
 
-Brands and product teams need to know how people feel about them at scale — reading every mention manually doesn't work past a few hundred posts. Automated sentiment classification turns a stream of unstructured text into a trackable metric.
+Classify social media posts as positive, negative, or neutral.
 
-## Dataset
+## Key Features
 
-499 labelled tweets with text, sentiment label, timestamp, and platform. Included at [`dataset/sentiment_analysis.csv`](./dataset/sentiment_analysis.csv).
+✅ Modular Codebase
+✅ Reproducible Results
+✅ Unit Testing
+✅ Professional Documentation
+✅ Easy Installation
+✅ Extensible Design
 
----
-
-## Approach
-
-```
-Raw tweet text
-  ↓ Lowercase
-  ↓ Strip non-alphabetic characters (regex)
-  ↓ Remove English stopwords (NLTK)
-  ↓ WordNet lemmatisation
-  ↓ TF-IDF vectorisation (unigrams + bigrams, max 5,000 features)
-  ↓ Logistic Regression (class_weight='balanced', max_iter=1000)
-```
-
-### Why each step
-
-- **Lemmatisation over stemming** — reduces "running" to "running"→"run" while keeping real words, so features stay interpretable. Stemming would produce fragments like "runn".
-- **Stopword removal** — words like "the" and "is" appear in every class and carry no sentiment signal.
-- **Bigrams alongside unigrams** — "not good" carries the opposite sentiment to "good". A unigram-only model can't see negation; bigrams capture it.
-- **`class_weight='balanced'`** — the classes are unevenly sized, so this penalises errors on rarer classes more heavily, preventing the model from simply predicting the majority class.
-- **Stratified 80/20 split** — preserves class proportions across train and test, so the test set is representative.
-
----
-
-## Results
-
-| Class | Precision | Recall | F1-Score | Support |
-|-------|-----------|--------|----------|---------|
-| Negative | 0.85 | 0.41 | 0.55 | 27 |
-| Neutral | 0.63 | 0.90 | 0.74 | 40 |
-| Positive | 0.80 | 0.73 | 0.76 | 33 |
-| **Accuracy** | | | **0.71** | 100 |
-| **Macro avg** | 0.76 | 0.68 | 0.68 | 100 |
-| **Weighted avg** | 0.75 | 0.71 | 0.70 | 100 |
-
-### Honest reading of these numbers
-
-**The model has a clear weakness on negative sentiment.** Precision is high (0.85) — when it says "negative", it's usually right. But recall is only 0.41, meaning it misses 59% of genuinely negative tweets, most of which it labels neutral.
-
-That failure mode matters in practice: a brand-monitoring tool that misses over half of complaints is not fit for purpose, even at 71% headline accuracy. **This is why per-class metrics matter more than a single accuracy figure.**
-
-**Root cause is most likely data volume.** With only 27 negative examples in the test set and roughly 135 in training, there simply aren't enough examples for the model to learn the vocabulary of negativity — which is more varied and often more subtle (sarcasm, understatement) than positive language.
-
----
-
-## Running It
+## Installation
 
 ```bash
-pip install pandas scikit-learn nltk
-cd notebooks
-jupyter notebook sentiment_analysis.ipynb
+git clone https://gitlab.com/ansht_121/machine-learning-project.git
+cd machine-learning-project/sentiment_Analysis_project
+pip install -r requirements.txt
 ```
 
-NLTK corpora (`stopwords`, `wordnet`) download automatically on first run. The notebook reads the dataset from `../dataset/sentiment_analysis.csv`.
+## Usage
 
-The notebook includes a `predict_sentiment()` helper for classifying new text:
+### 1. Using Jupyter Notebook
+```bash
+jupyter notebook notebooks/sentiment_analysis.ipynb
+```
 
+### 2. Using Python Script
 ```python
-predict_sentiment("I love this product")   # → positive
-predict_sentiment("This is very bad")      # → negative
+import pandas as pd
+from sentiment_Analysis_project.src.data import load_data, preprocess_text, prepare_features, split_data
+from sentiment_Analysis_project.src.model import train_model, evaluate_model, save_model, predict_sentiment
+
+# Load data
+df = load_data("dataset/sentiment_analysis.csv")
+
+# Preprocess text
+df['processed_text'] = df['text'].apply(preprocess_text)
+
+# Prepare features
+vectorizer, X = prepare_features(df['processed_text'].tolist(), max_features=5000, ngram_range=(1, 2))
+y = df['sentiment'].values
+
+# Split data
+X_train, X_test, y_train, y_test = split_data(X, y, test_size=0.2, random_state=42)
+
+# Train model
+model = train_model(X_train, y_train, class_weight='balanced', max_iter=1000)
+
+# Evaluate model
+metrics = evaluate_model(model, X_test, y_test)
+print(f"Accuracy: {metrics['accuracy']:.3f}")
+print(f"F1-Score (weighted): {metrics['f1_score']:.3f}")
+
+# Save model and vectorizer
+save_model(model, "models/sentiment_model.pkl")
+import joblib
+joblib.dump(vectorizer, "models/tfidf_vectorizer.pkl")
+
+# Example prediction
+sample_text = "I love this product! It's amazing!"
+prediction = predict_sentiment(model, vectorizer, sample_text)
+print(f"Sentiment for '{sample_text}': {prediction}")
 ```
 
----
+## Model Details
 
-## Improvement Path
+Algorithm: Logistic Regression with TF-IDF features
+Pipeline:
+1. Text preprocessing (lowercase, remove non-alphabetic, stopword removal, lemmatization)
+2. TF-IDF vectorization (unigrams + bigrams, 5,000 features)
+3. Logistic Regression classifier (with class_weight='balanced')
 
-Ordered by expected impact:
+Why This Approach?
+- TF-IDF over raw counts: Better feature weighting
+- NLP preprocessing: Improves feature quality
+- Logistic Regression: Interpretable and fast
+- Class weighting: Handles class imbalance
 
-1. **More data** — the clearest lever. Negative-class recall is data-starved, not model-starved.
-2. **Try a linear SVM** — often outperforms logistic regression on high-dimensional sparse text features.
-3. **Transformer embeddings (BERT)** — understands context and negation natively rather than relying on bigrams.
-4. **Threshold tuning** — if catching complaints matters more than avoiding false alarms, lower the decision threshold for the negative class to trade precision for recall.
+## Evaluation Metrics
 
----
+- Accuracy: Proportion of correctly classified tweets
+- Precision: Of predicted positives, how many were actually positive
+- Recall: Of actual positives, how many were correctly predicted
+- F1-Score: Harmonic mean of precision and recall
+- Confusion Matrix: Detailed breakdown of predictions per class
+
+## Running Tests
+
+```bash
+python -m pytest tests/ -v
+```
+
+## Example Output
+
+After running the training script:
+```
+Accuracy: 0.710
+F1-Score (weighted): 0.700
+```
+
+This indicates the model achieves 71% accuracy on the test set.
+
+## Data Requirements
+
+Place dataset in `dataset/sentiment_analysis.csv` with:
+- `text`: The tweet/text to analyze
+- `sentiment`: Sentiment label (positive, negative, neutral)
+
+## Extending the Project
+
+### Trying Different Models
+Replace LogisticRegression with SVM, Naive Bayes, or Random Forest.
+
+### Improving Text Preprocessing
+Modify `src/data.py` `preprocess_text` function for better handling of social media text.
+
+### Feature Engineering
+Adjust ngram_range, max_features, or add additional features.
+
+### Hyperparameter Tuning
+Adjust Logistic Regression parameters (C, penalty, solver, class_weight).
+
+## References
+
+- Scikit-learn Documentation: https://scikit-learn.org/
+- NLTK Documentation: https://www.nltk.org/
+- TF-IDF: https://en.wikipedia.org/wiki/Tf%E2%80%93idf
+- Pang, B., Lee, L., & Vaithyanathan, S. (2002). "Thumbs up? Sentiment Classification using Machine Learning Techniques." EMNLP.
 
 [⬅ Back to all ML projects](../README.md)
