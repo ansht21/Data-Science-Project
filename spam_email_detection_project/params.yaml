@@ -1,0 +1,31 @@
+# Spam Email Detection - Model Parameters
+
+# Data parameters
+data:
+  raw_path: "data/raw/spam.csv"
+  processed_path: "data/processed/"
+  text_column: "text"
+  label_column: "label"
+  test_size: 0.2
+  random_state: 42
+
+# Preprocessing parameters
+preprocessing:
+  max_features: 5000
+  stop_words: "english"
+  ngram_range:
+    - 1
+    - 1
+
+# Model parameters
+model:
+  type: "logistic_regression"
+  C: 1.0
+  max_iter: 1000
+  random_state: 42
+
+# Output parameters
+output:
+  model_path: "models/spam_model.pkl"
+  vectorizer_path: "models/tfidf_vectorizer.pkl"
+  save_preprocessed: true
