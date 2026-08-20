@@ -1,0 +1,48 @@
+# Sales Prediction - Model Parameters
+
+# Data parameters
+data:
+  raw_path: "data/raw/sales dataset.csv"
+  processed_path: "data/processed/"
+  target_column: "Item_Outlet_Sales"
+  test_size: 0.2
+  random_state: 42
+
+# Preprocessing parameters
+preprocessing:
+  numeric_features:
+    - "Item_Weight"
+    - "Item_Visibility"
+    - "Item_MRP"
+    - "Outlet_Establishment_Year"
+  categorical_features:
+    - "Item_Fat_Content"
+    - "Item_Type"
+    - "Outlet_Size"
+    - "Outlet_Location_Type"
+    - "Outlet_Type"
+
+# Model parameters
+model:
+  type: "linear_regression"
+  fit_intercept: true
+  copy_X: true
+  n_jobs: null
+
+# Training parameters
+training:
+  # No specific training parameters for LinearRegression beyond fit
+  pass
+
+# Evaluation parameters
+evaluation:
+  metrics:
+    - "mse"
+    - "mae"
+    - "rmse"
+    - "r2"
+
+# Output parameters
+output:
+  model_path: "models/sales_model.pkl"
+  save_preprocessed: true

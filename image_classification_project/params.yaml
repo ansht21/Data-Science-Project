@@ -1,0 +1,52 @@
+# Image Classification (MNIST) - Model Parameters
+
+# Data parameters
+data:
+  dataset_name: "mnist"
+  validation_split: 0.1
+  random_state: 42
+  image_shape: [28, 28, 1]
+  num_classes: 10
+
+# Preprocessing parameters
+preprocessing:
+  normalize: true
+  reshape_to_4d: true
+
+# Model parameters
+model:
+  type: "cnn"
+  input_shape: [28, 28, 1]
+  conv_layers:
+    - filters: 32
+      kernel_size: [3, 3]
+      activation: "relu"
+      max_pool_size: [2, 2]
+    - filters: 64
+      kernel_size: [3, 3]
+      activation: "relu"
+      max_pool_size: [2, 2]
+    - filters: 64
+      kernel_size: [3, 3]
+      activation: "relu"
+  dense_layers:
+    - units: 64
+      activation: "relu"
+      dropout: 0.5
+  output_units: 10
+  output_activation: "softmax"
+
+# Training parameters
+training:
+  optimizer: "adam"
+  loss: "sparse_categorical_crossentropy"
+  metrics: ["accuracy"]
+  epochs: 5
+  batch_size: 32
+  validation_split: 0.1
+  verbose: 1
+
+# Output parameters
+output:
+  model_path: "models/mnist_cnn.h5"
+  save_format: "h5"

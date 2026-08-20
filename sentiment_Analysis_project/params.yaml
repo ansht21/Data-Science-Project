@@ -1,0 +1,57 @@
+# Sentiment Analysis - Model Parameters
+
+# Data parameters
+data:
+  raw_path: "dataset/sentiment_analysis.csv"
+  processed_path: "data/processed/"
+  text_column: "text"
+  target_column: "sentiment"
+  test_size: 0.2
+  random_state: 42
+
+# Preprocessing parameters
+preprocessing:
+  lowercase: true
+  remove_non_alphabetic: true
+  remove_stopwords: true
+  lemmatize: true
+  language: "english"
+
+# Feature extraction parameters
+features:
+  method: "tfidf"
+  max_features: 5000
+  ngram_range:
+    - 1
+    - 2
+  # Alternatively, can use 'count' or 'hashing'
+
+# Model parameters
+model:
+  type: "logistic_regression"
+  C: 1.0
+  max_iter: 1000
+  random_state: 42
+  class_weight: "balanced"  # or None
+  multi_class: "auto"
+  solver: "lbfgs"
+
+# Training parameters
+training:
+  # No additional parameters beyond model initialization for LogisticRegression
+  pass
+
+# Evaluation parameters
+evaluation:
+  metrics:
+    - "accuracy"
+    - "precision"
+    - "recall"
+    - "f1_score"
+  average: "weighted"  # for precision, recall, f1
+
+# Output parameters
+output:
+  model_path: "models/sentiment_model.pkl"
+  vectorizer_path: "models/tfidf_vectorizer.pkl"
+  save_preprocessed: true
