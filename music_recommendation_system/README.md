@@ -1,85 +1,121 @@
 # Music Recommendation System
 
-> Content-based recommender that suggests similar songs using cosine similarity over engineered audio and metadata features.
+Content-based music recommendation system using song features.
 
-![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=flat-square&logo=scikit-learn&logoColor=white)
-![Pandas](https://img.shields.io/badge/Pandas-150458?style=flat-square&logo=pandas&logoColor=white)
-![NumPy](https://img.shields.io/badge/NumPy-013243?style=flat-square&logo=numpy&logoColor=white)
+## Project Structure
 
----
+music_recommendation_system/
+├── src/
+│   ├── __init__.py
+│   ├── data.py
+│   ├── model.py
+│   └── utils.py
+├── data/
+│   ├── raw/
+│   └── processed/
+├── models/
+├── dataset/
+├── notebooks/
+│   └── music_recommendation.ipynb
+├── tests/
+│   └── test_basic.py
+├── requirements.txt
+├── params.yaml
+└── README.md
 
-## Problem
+## Problem Statement
 
-Given a song someone already enjoys, recommend others they're likely to enjoy. This is the core loop behind every streaming platform's discovery feature.
+Build a content-based music recommendation system that suggests similar songs based on song attributes.
 
-## Dataset
+## Key Features
 
-100 songs with title, artist, genre, release year, duration, listen date, and platform. Included at [`dataset/music_dataset.csv`](./dataset/music_dataset.csv).
+✅ Modular Codebase
+✅ Reproducible Results
+✅ Configuration Management (params.yaml)
+✅ Unit Testing
+✅ Professional Documentation
+✅ Easy Installation
+✅ Extensible Design
 
----
+## Installation
 
-## Approach
-
+```bash
+git clone https://gitlab.com/ansht_121/machine-learning-project.git
+cd machine-learning-project/music_recommendation_system
+pip install -r requirements.txt
 ```
-Raw listening data
-  ↓ Deduplicate to unique songs
-  ↓ Feature engineering — aggregate listen count per song
-  ↓ One-hot encode categoricals (genre, artist)
-  ↓ StandardScaler normalisation
-  ↓ Cosine similarity matrix (all song pairs)
-  ↓ recommend_song(title, top_k) → K most similar tracks
-```
-
-### Why content-based rather than collaborative filtering
-
-The two dominant approaches to recommendation are:
-
-| Approach | Uses | Weakness |
-|----------|------|----------|
-| **Collaborative filtering** | Patterns across many users' listening histories | **Cold start** — a brand-new song has no listening history, so it can never be recommended |
-| **Content-based** *(used here)* | The song's own attributes | Tends toward similar recommendations; can't surface unexpected cross-genre finds |
-
-Content-based was the right fit here because the dataset describes song *attributes* rather than multiple users' behaviour. It also means a newly added song is immediately recommendable from its metadata alone — no waiting for play counts to accumulate.
-
-### Why StandardScaler matters
-
-Cosine similarity is sensitive to feature magnitude. Without scaling, `Release_Year` (values around 2024) would numerically dominate `Duration_Minutes` (values around 4), making the recommender effectively sort by release date. Standardising puts every feature on a comparable scale so genre, artist, duration, and year each contribute meaningfully.
-
-### Why cosine similarity rather than Euclidean distance
-
-Cosine measures the *angle* between feature vectors, not their magnitude — so two songs with a similar profile of characteristics score as similar even if one has a much higher listen count. For sparse one-hot encoded data this behaves considerably better than raw distance.
-
----
 
 ## Usage
 
-```python
-recommend_song("Faded", top_k=3)
-```
-
-Returns the three most similar tracks by cosine similarity, excluding the query song itself.
-
----
-
-## Running It
-
+### 1. Using Jupyter Notebook
 ```bash
-pip install pandas numpy scikit-learn
-cd notebooks
-jupyter notebook music_recommendation.ipynb
+jupyter notebook notebooks/music_recommendation.ipynb
 ```
 
-The notebook reads the dataset from `../dataset/music_dataset.csv`.
+### 2. Using Python Script
+```python
+import pandas as pd
+from music_recommendation_system.src.data import load_data, preprocess_features, compute_similarity_matrix, get_recommendations
+import yaml
 
----
+# Load configuration
+with open('params.yaml', 'r') as f:
+    params = yaml.safe_load(f)
 
-## Limitations & Next Steps
+# Load and preprocess data
+df = load_data(params['data']['raw_path'])
+features, feature_names, _ = preprocess_features(df, 
+                                              feature_columns=params['data']['feature_columns'])
 
-- **Small catalogue** — 100 songs limits how meaningful "most similar" can be. Recommendation quality scales sharply with catalogue size.
-- **No evaluation metric** — content-based recommenders are hard to score without user feedback. Adding precision@k against held-out listening data would make quality measurable rather than anecdotal.
-- **Hybrid approach** — once real interaction data exists, layering collaborative filtering on top would surface unexpected recommendations that pure content matching cannot.
-- **Audio features** — incorporating tempo, key, and energy (e.g. via the Spotify API) would capture musical similarity that genre labels miss.
+# Compute similarity matrix
+similarity_matrix = compute_similarity_matrix(features, 
+                                            metric=params['model']['similarity_metric'])
 
----
+# Get recommendations
+target_song = "Shape of You"
+recommendations = get_recommendations(similarity_matrix, target_song, df['title'].tolist(), 
+                                    top_n=params['model']['top_n'])
 
-[⬅ Back to all ML projects](../README.md)
+print(f"Recommendations for '{target_song}':")
+for i, (song, score) in enumerate(recommendations, 1):
+    print(f"{i}. {song} (Similarity: {score:.3f})")
+```
+
+## Model Details
+
+Algorithm: Content-based filtering
+Pipeline:
+1. Load song metadata
+2. Preprocess features (normalize numeric, one-hot encode categorical)
+3. Compute similarity matrix (cosine similarity)
+4. Generate recommendations
+
+Features: title, artist, genre, year, duration, listen_count
+Similarity Metric: Cosine similarity (configurable)
+
+## Data Requirements
+
+Place dataset in `dataset/music_dataset.csv` with:
+- `title`: Song title
+- `artist`: Artist name
+- `genre`: Music genre
+- `year`: Release year
+- `duration`: Song duration in seconds
+- `listen_count`: Number of plays
+
+## Extending the Project
+
+### Trying Different Features
+Modify params.yaml to change feature_columns
+
+### Changing Similarity Metric
+Update params.yaml model.similarity_metric to 'euclidean' or 'correlation'
+
+### Adding New Features
+Add columns to dataset and include in feature_columns
+
+## References
+
+- Scikit-learn Documentation: https://scikit-learn.org/
+- Pandas Documentation: https://pandas.pydata.org/docs/
+- Ricci, F., Rokach, L., & Shapira, B. (2011). "Introduction to Recommender Systems Handbook."

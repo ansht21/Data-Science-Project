@@ -1,0 +1,38 @@
+# Music Recommendation System - Model Parameters
+
+# Data parameters
+data:
+  raw_path: "dataset/music_dataset.csv"
+  processed_path: "data/processed/"
+  feature_columns:
+    - "genre"
+    - "artist"
+    - "year"
+    - "duration"
+    - "listen_count"
+  target_column: None  # Not applicable for recommendation
+
+# Preprocessing parameters
+preprocessing:
+  numeric_features:
+    - "year"
+    - "duration"
+    - "listen_count"
+  categorical_features:
+    - "genre"
+    - "artist"
+  scaling:
+    numeric: "minmax"  # or "standard"
+    categorical: "onehot"
+
+# Model parameters
+model:
+  similarity_metric: "cosine"  # options: "cosine", "euclidean", "correlation"
+  top_n: 10  # Number of recommendations to return
+
+# Output parameters
+output:
+  features_path: "data/processed/features.npy"
+  titles_path: "data/processed/song_titles.txt"
+  similarity_path: "data/processed/similarity_matrix.npy"
+  model_dir: "models"
