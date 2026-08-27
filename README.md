@@ -1,6 +1,6 @@
 <div align="center">
 
-# Machine Learning Projects
+# Data Science & ML Projects
 
 ### Six end-to-end ML projects spanning NLP, recommendation systems, deep learning, and regression
 
@@ -16,7 +16,6 @@
 [![Profile](https://img.shields.io/badge/GitLab-Profile-FC6D26?style=for-the-badge&logo=gitlab&logoColor=white)](https://gitlab.com/ansht_121)
 [![Portfolio](https://img.shields.io/badge/Portfolio-Live_Site-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://ansh-thakur.netlify.app/)
 [![Data Analytics](https://img.shields.io/badge/GitLab-Data_Analytics-6C8CFF?style=for-the-badge&logo=gitlab&logoColor=white)](https://gitlab.com/ansht_121/data-analytics)
-[![Full-Stack](https://img.shields.io/badge/GitLab-Full_Stack-A97BFF?style=for-the-badge&logo=gitlab&logoColor=white)](https://gitlab.com/ansht_121/college-full-stack-project)
 
 </div>
 
