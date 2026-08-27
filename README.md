@@ -11,6 +11,13 @@
 ![NLTK](https://img.shields.io/badge/NLTK-154F5B?style=for-the-badge&logo=python&logoColor=white)
 ![Pandas](https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white)
 
+<br/>
+
+[![Profile](https://img.shields.io/badge/GitLab-Profile-FC6D26?style=for-the-badge&logo=gitlab&logoColor=white)](https://gitlab.com/ansht_121)
+[![Portfolio](https://img.shields.io/badge/Portfolio-Live_Site-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://ansh-thakur.netlify.app/)
+[![Data Analytics](https://img.shields.io/badge/GitLab-Data_Analytics-6C8CFF?style=for-the-badge&logo=gitlab&logoColor=white)](https://gitlab.com/ansht_121/data-analytics)
+[![Full-Stack](https://img.shields.io/badge/GitLab-Full_Stack-A97BFF?style=for-the-badge&logo=gitlab&logoColor=white)](https://gitlab.com/ansht_121/college-full-stack-project)
+
 </div>
 
 ---
@@ -232,8 +239,8 @@ Machine-learning-project/
 
 ```bash
 # Clone the repository
-git clone https://github.com/ansht120/Machine-learning-project.git
-cd Machine-learning-project
+git clone https://gitlab.com/ansht_121/machine-learning-project.git
+cd machine-learning-project
 
 # Install dependencies
 pip install numpy pandas matplotlib scikit-learn tensorflow nltk jupyter
@@ -305,7 +312,9 @@ jupyter notebook music_recommendation.ipynb
 
 ## Author
 
-**Ansh Thakur** — Aspiring Data Analyst & ML Enthusiast
+**Ansh Thakur** — Data Analyst & Machine Learning Practitioner
 
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=flat&logo=github&logoColor=white)](https://github.com/ansht120)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ansh-thakur-5407)
+[![GitLab](https://img.shields.io/badge/GitLab-ansht__121-FC6D26?style=flat&logo=gitlab&logoColor=white)](https://gitlab.com/ansht_121)
+[![Portfolio](https://img.shields.io/badge/Portfolio-Live_Site-00C7B7?style=flat&logo=netlify&logoColor=white)](https://ansh-thakur.netlify.app/)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ansh-thakur-5407192b4/)
+[![Email](https://img.shields.io/badge/Email-D14836?style=flat&logo=gmail&logoColor=white)](mailto:ansht1194@gmail.com)
