@@ -12,7 +12,7 @@ look like?
 ## Repository Structure
 
 ```
-02_subscription-retention-analytics/
+02_subscription-retention-prediction/
 ├── Churn_EDA_Analysis.ipynb        # cleaning, KPI baseline, segment analysis, statistics
 ├── Churn_Prediction_Analysis.ipynb # classification: LogReg + Random Forest (engineered features)
 ├── sql_queries/                    # 01_data_cleaning.sql + 02_churn_analysis.sql

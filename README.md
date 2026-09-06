@@ -63,7 +63,7 @@
 
 > **Honest read:** SARIMA residuals pass Ljung-Box (p = 0.54 / 0.86) — no leftover autocorrelation. The fare model's high R² reflects that distance and duration genuinely determine fare; the value is the *expected vs charged* fare gap as an operational lever, not the score itself.
 
-📁 [`01_uber-trip-demand-analysis/`](./01_uber-trip-demand-analysis/)
+📁 [`01_ride-demand-forecasting/`](./01_ride-demand-forecasting/)
 
 ---
 
@@ -94,7 +94,7 @@ Telco Customer Churn (7,043 × 21)
 
 > **Honest read:** recall is the metric that matters here — missing a churner costs the full customer value, while a false alarm costs one retention call. Logistic Regression wins on ROC-AUC (0.839) and recall (0.561) despite Random Forest's slight precision edge. Risk scores feed a revenue-at-risk segmentation (`churn_segment_revenue.csv`) rather than stopping at a leaderboard number.
 
-📁 [`02_subscription-retention-analytics/`](./02_subscription-retention-analytics/)
+📁 [`02_subscription-retention-prediction/`](./02_subscription-retention-prediction/)
 
 ---
 
@@ -276,8 +276,8 @@ Raw listening data
 
 ```
 data-science-projects/
-├── 01_uber-trip-demand-analysis/       # Forecasting · SARIMA + K-Means + RF fare model
-├── 02_subscription-retention-analytics/# Churn · LogReg + RF, modular pipeline with tests
+├── 01_ride-demand-forecasting/       # Forecasting · SARIMA + K-Means + RF fare model
+├── 02_subscription-retention-prediction/# Churn · LogReg + RF, modular pipeline with tests
 │   ├── src/                            # data_processing → modeling → explainability
 │   └── Churn_Prediction_Analysis.ipynb
 ├── image_classification_project/       # CNN · MNIST digit recognition
@@ -321,13 +321,13 @@ jupyter notebook
 **Ride Demand Forecasting · Subscription Churn Prediction** — each folder ships its own `requirements.txt` and README.
 
 ```bash
-pip install -r 01_uber-trip-demand-analysis/requirements.txt
-pip install -r 02_subscription-retention-analytics/requirements.txt
+pip install -r 01_ride-demand-forecasting/requirements.txt
+pip install -r 02_subscription-retention-prediction/requirements.txt
 
-jupyter notebook 01_uber-trip-demand-analysis/Forecast_Clustering_Analysis.ipynb
-jupyter notebook 02_subscription-retention-analytics/Churn_Prediction_Analysis.ipynb
+jupyter notebook 01_ride-demand-forecasting/Forecast_Clustering_Analysis.ipynb
+jupyter notebook 02_subscription-retention-prediction/Churn_Prediction_Analysis.ipynb
 # or run the modular churn pipeline end-to-end:
-python 02_subscription-retention-analytics/src/run_pipeline.py --help
+python 02_subscription-retention-prediction/src/run_pipeline.py --help
 ```
 
 **Image Classification** — no setup needed; MNIST downloads automatically on first run.
