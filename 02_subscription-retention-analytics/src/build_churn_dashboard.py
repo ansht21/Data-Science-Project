@@ -6,7 +6,7 @@ Retention Analytics project, following the same native-Excel dashboard pattern
 used in the Supply Chain project: executive KPI cards, a visible ChartData sheet
 with aggregated pivots, native Excel charts, and a filterable customer table.
 
-Run from subscription-retention-analytics/:
+Run from 02_subscription-retention-analytics/:
     python src/build_churn_dashboard.py
 
 Output:
