@@ -1,4 +1,4 @@
-# Ride Demand & Revenue Forecasting
+# Ride Demand and Revenue Forecasting
 
 **Business problem:** A ride-hailing operator needs to know *when* to surge-price, *where*
 to position premium vehicles, and *which* fleet tier to grow — using 35,000 trip records.
