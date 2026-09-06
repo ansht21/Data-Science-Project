@@ -2,7 +2,7 @@
 
 # Data Science & ML Projects
 
-### Eight end-to-end ML projects spanning NLP, recommendation systems, deep learning, regression, forecasting, and churn modeling
+### Six end-to-end ML projects spanning NLP, recommendation systems, deep learning, and regression
 
 ![Python](https://img.shields.io/badge/Python-3.10-3776AB?style=for-the-badge&logo=python&logoColor=white)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
@@ -31,8 +31,6 @@
 | 4 | [Car Price Prediction](#4--car-price-prediction) | Regression | Random Forest Regressor | MAE · MSE · R² evaluated |
 | 5 | [Sentiment Analysis](#5--sentiment-analysis--tweet-classification) | NLP / text classification | TF-IDF + Logistic Regression | **71%** accuracy, 0.70 weighted F1 |
 | 6 | [Music Recommendation](#6--music-recommendation-system) | Recommendation | Content-based, cosine similarity | Top-K similar songs |
-| 7 | [Ride Demand Forecasting](#7--ride-demand-forecasting--revenue-analytics) | Time series · Clustering · Regression | SARIMA · K-Means · Random Forest | **R² = 0.972** fare model · **MAPE 8.3%** forecast |
-| 8 | [Subscription Churn Prediction](#8--subscription-churn-prediction--retention-analytics) | Binary classification | LogReg + Random Forest + explainability | **ROC-AUC 0.839** · 80.0% accuracy |
 
 ---
 
@@ -210,68 +208,6 @@ Raw listening data
 
 ---
 
-## 7 · Ride Demand Forecasting & Revenue Analytics
-
-**Problem:** A ride-hailing operator needs to know *when* to surge-price, *where* to position premium vehicles, and *which* fleet tier to grow — 35,000 trip records, five pickup zones, one simulated year.
-
-*Cross-listed from the [Data Analytics repo](https://gitlab.com/ansht_121/data-analytics) — the SQL / Power BI dashboard layer lives there; this folder contains the full predictive modeling layer.*
-
-### Pipeline
-
-```
-35,000 trips (Jan–Dec)
-  ↓ SQL cleaning pipeline (ROW_NUMBER() dedup safeguard, type coercion)
-  ↓ SARIMA(1,1,1)(1,0,1,7) — daily demand forecast, weekly seasonality
-  ↓ K-Means over zone×hour cells — demand segmentation (silhouette-selected k)
-  ↓ RandomForestRegressor — route-level fare prediction
-  ↓ All validated on a held-out Nov–Dec window (no leakage)
-```
-
-### Results (held-out)
-
-| Model | Performance |
-|-------|-------------|
-| **SARIMA demand forecast** | MAE 7.6 · RMSE 9.6 · **MAPE 8.3%** — ~20% error reduction vs the seasonal-naive baseline (MAE 9.5) |
-| **K-Means demand clusters** | k=2 · **silhouette 0.675** — premium long-haul cells (avg ₹507 / 24.9 km) vs high-volume short-trip cells (avg ₹331 / 15.6 km) |
-| **RF fare prediction** | **R² = 0.972** · RMSE ₹37.4 — prediction error ~13% of a typical fare |
-
-> **Honest read:** SARIMA residuals pass Ljung-Box (p = 0.54 / 0.86) — no leftover autocorrelation. The fare model's high R² reflects that distance and duration genuinely determine fare; the value is the *expected vs charged* fare gap as an operational lever, not the score itself.
-
-📁 [`uber-trip-demand-analysis/`](./uber-trip-demand-analysis/)
-
----
-
-## 8 · Subscription Churn Prediction & Retention Analytics
-
-**Problem:** A subscription business (real-world telco data, 7,043 customers) is losing ~26% of customers. Predict who is at risk, why, and what revenue is on the table.
-
-*Cross-listed from the [Data Analytics repo](https://gitlab.com/ansht_121/data-analytics) — the SQL / EDA / Excel dashboard layer lives there; this folder contains the full ML pipeline.*
-
-### Pipeline
-
-```
-Telco Customer Churn (7,043 × 21)
-  ↓ Cleaning & feature engineering (tenure bands, service counts, charge ratios)
-  ↓ Churn_EDA_Analysis.ipynb — KPI baseline, segment analysis, statistical validation
-  ↓ Churn_Prediction_Analysis.ipynb — Logistic Regression + Random Forest
-  ↓ Modular src/ pipeline: data_processing → feature_engineering → modeling
-    → evaluation → explainability → risk_scoring
-  ↓ pytest suite covering the pipeline modules
-```
-
-### Results (held-out)
-
-| Model | Accuracy | Precision | Recall | F1 | ROC-AUC |
-|-------|----------|-----------|--------|-----|---------|
-| **Logistic Regression** | **0.800** | 0.640 | **0.561** | 0.598 | **0.839** |
-| Random Forest | 0.797 | **0.652** | 0.511 | 0.573 | 0.837 |
-
-> **Honest read:** recall is the metric that matters here — missing a churner costs the full customer value, while a false alarm costs one retention call. Logistic Regression wins on ROC-AUC (0.839) and recall (0.561) despite Random Forest's slight precision edge. Risk scores feed a revenue-at-risk segmentation (`churn_segment_revenue.csv`) rather than stopping at a leaderboard number.
-
-📁 [`subscription-retention-analytics/`](./subscription-retention-analytics/)
-
----
-
 ## Repository Structure
 
 ```
@@ -284,13 +220,9 @@ Machine-learning-project/
 ├── sentiment_Analysis_project/         # NLP · tweet sentiment classification
 │   ├── dataset/sentiment_analysis.csv
 │   └── notebooks/sentiment_analysis.ipynb
-├── music_recommendation_system/        # Content-based recommender
-│   ├── dataset/music_dataset.csv
-│   └── notebooks/music_recommendation.ipynb
-├── uber-trip-demand-analysis/          # Forecasting · SARIMA + K-Means + RF fare model
-└── subscription-retention-analytics/   # Churn · LogReg + RF, modular pipeline with tests
-    ├── src/                            # data_processing → modeling → explainability
-    └── Churn_Prediction_Analysis.ipynb
+└── music_recommendation_system/        # Content-based recommender
+    ├── dataset/music_dataset.csv
+    └── notebooks/music_recommendation.ipynb
 ```
 
 ---
@@ -352,18 +284,6 @@ jupyter notebook music_recommendation.ipynb
 
 > The notebook loads `MusicDataset.csv`. Update the path to `../dataset/music_dataset.csv` to match this repository's layout.
 
-**Ride Demand Forecasting · Subscription Churn Prediction** — each folder ships its own `requirements.txt` and README.
-
-```bash
-pip install -r uber-trip-demand-analysis/requirements.txt
-pip install -r subscription-retention-analytics/requirements.txt
-
-jupyter notebook uber-trip-demand-analysis/Forecast_Clustering_Analysis.ipynb
-jupyter notebook subscription-retention-analytics/Churn_Prediction_Analysis.ipynb
-# or run the modular churn pipeline end-to-end:
-python subscription-retention-analytics/src/run_pipeline.py --help
-```
-
 ---
 
 ## Skills Demonstrated
@@ -375,9 +295,6 @@ python subscription-retention-analytics/src/run_pipeline.py --help
 | **Classical ML** | Linear & logistic regression, Random Forest ensembles, class imbalance handling, stratified splitting |
 | **Regression Analysis** | R², MSE, MAE, RMSE interpretation; matching model complexity to relationship structure |
 | **Recommender Systems** | Content-based filtering, one-hot encoding, cosine similarity, cold-start reasoning |
-| **Time Series Forecasting** | SARIMA with weekly seasonality, held-out validation, Ljung-Box residual diagnostics, seasonal-naive baselines |
-| **Unsupervised Learning** | K-Means demand segmentation, silhouette-based k selection, cluster profiling |
-| **Churn Modeling** | Logistic Regression vs Random Forest, ROC-AUC / precision / recall trade-offs, explainability, risk scoring |
 | **Evaluation** | Accuracy, precision, recall, F1-score, per-class analysis, train/test gap interpretation |
 | **Data Handling** | Pandas transformations, feature scaling, deduplication, aggregation |
 
