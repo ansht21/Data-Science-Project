@@ -25,7 +25,7 @@
 
 | # | Project | Problem Type | Approach | Result |
 |---|---------|--------------|----------|--------|
-| 1 | [Ride Demand Forecasting](#1--ride-demand-forecasting--revenue-analytics) | Time series · Clustering · Regression | SARIMA · K-Means · Random Forest | **R² = 0.972** fare model · **MAPE 8.3%** forecast |
+| 1 | [Ride Demand & Revenue Forecasting](#1--ride-demand--revenue-forecasting) | Time series · Clustering · Regression | SARIMA · K-Means · Random Forest | **R² = 0.972** fare model · **MAPE 8.3%** forecast |
 | 2 | [Subscription Churn Prediction](#2--subscription-churn-prediction--retention-analytics) | Binary classification | LogReg + Random Forest + explainability | **ROC-AUC 0.839** · 80.0% accuracy |
 | 3 | [Image Classification](#3--image-classification--handwritten-digit-recognition) | Multi-class classification | CNN (TensorFlow/Keras) | **98.83%** test accuracy |
 | 4 | [Spam Email Detection](#4--spam-email-detection) | Binary text classification | TF-IDF + Logistic Regression | **96.32%** test accuracy |
@@ -36,7 +36,7 @@
 
 ---
 
-## 1 · Ride Demand Forecasting & Revenue Analytics
+## 1 · Ride Demand & Revenue Forecasting
 
 **Problem:** A ride-hailing operator needs to know *when* to surge-price, *where* to position premium vehicles, and *which* fleet tier to grow — 35,000 trip records, five pickup zones, one simulated year.
 
@@ -63,7 +63,7 @@
 
 > **Honest read:** SARIMA residuals pass Ljung-Box (p = 0.54 / 0.86) — no leftover autocorrelation. The fare model's high R² reflects that distance and duration genuinely determine fare; the value is the *expected vs charged* fare gap as an operational lever, not the score itself.
 
-📁 [`01_ride-demand-forecasting/`](./01_ride-demand-forecasting/)
+📁 [`01_ride-demand-revenue-forecasting/`](./01_ride-demand-revenue-forecasting/)
 
 ---
 
@@ -276,7 +276,7 @@ Raw listening data
 
 ```
 data-science-projects/
-├── 01_ride-demand-forecasting/       # Forecasting · SARIMA + K-Means + RF fare model
+├── 01_ride-demand-revenue-forecasting/# Forecasting · SARIMA + K-Means + RF fare model
 ├── 02_subscription-retention-prediction/# Churn · LogReg + RF, modular pipeline with tests
 │   ├── src/                            # data_processing → modeling → explainability
 │   └── Churn_Prediction_Analysis.ipynb
@@ -321,10 +321,10 @@ jupyter notebook
 **Ride Demand Forecasting · Subscription Churn Prediction** — each folder ships its own `requirements.txt` and README.
 
 ```bash
-pip install -r 01_ride-demand-forecasting/requirements.txt
+pip install -r 01_ride-demand-revenue-forecasting/requirements.txt
 pip install -r 02_subscription-retention-prediction/requirements.txt
 
-jupyter notebook 01_ride-demand-forecasting/Forecast_Clustering_Analysis.ipynb
+jupyter notebook 01_ride-demand-revenue-forecasting/Forecast_Clustering_Analysis.ipynb
 jupyter notebook 02_subscription-retention-prediction/Churn_Prediction_Analysis.ipynb
 # or run the modular churn pipeline end-to-end:
 python 02_subscription-retention-prediction/src/run_pipeline.py --help
