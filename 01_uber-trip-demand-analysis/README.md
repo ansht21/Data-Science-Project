@@ -18,7 +18,7 @@ pip install pandas numpy matplotlib seaborn scikit-learn statsmodels jupyter
 # 1. Run the SQL queries in order: 01_data_cleaning.sql → 02_revenue_analysis.sql
 # 2. Generate visuals: jupyter notebook Forecast_Clustering_Analysis.ipynb
 ```
-All charts are saved to `image/` and cluster assignments to `outputs/demand_cluster_cells.csv` by the notebook itself. Power BI report: [`powerbi/UberTrip_Dashboard.pbix`](powerbi/UberTrip_Dashboard.pbix).
+All charts are saved to `image/` and cluster assignments to `outputs/demand_cluster_cells.csv` by the notebook itself. Power BI report: [`powerbi/UberTrip_Dashboard.pbix`](powerbi/UberTrip_Dashboard.pbix). Excel dashboard: [`excel_analysis/uber_trips_data.xlsx`](excel_analysis/uber_trips_data.xlsx).
 
 ---
 
@@ -136,6 +136,17 @@ lowest band) attract worse ratings.
 5. **Maintain City-Wide Coverage:** With 4 of 5 zones needed to reach 80% of revenue, do not concentrate supply in a handful of areas.
 
 > *Note: an earlier draft recommended a weekend surcharge and late-night surge — the data shows neither effect is real here, so those were removed. Knowing which recommendations the data does **not** support is part of the analysis.*
+
+---
+
+## Excel Dashboard (`excel_analysis/uber_trips_data.xlsx`)
+
+A native-Excel companion to the Power BI report, built directly on the cleaned trip table — no plugins, opens anywhere:
+
+- **Trip data sheet** — the cleaned 35,000-row trip table the SQL queries run against
+- **`Trip By Hour`** — hourly trip-volume table feeding the demand curve
+- **`Pivot_Revenue_Hour` · `Pivot_Revenue_Vehicle` · `Pivot_Weekend_Trips`** — revenue by hour, revenue by vehicle tier, and the weekend-vs-weekday split behind Q6
+- **12 native Excel charts** across these sheets, plus pivot tables you can re-slice yourself
 
 ---
 
