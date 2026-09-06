@@ -40,8 +40,8 @@ Classify social media posts as positive, negative, or neutral.
 ## Installation
 
 ```bash
-git clone https://gitlab.com/ansht_121/machine-learning-project.git
-cd machine-learning-project/sentiment_Analysis_project
+git clone https://gitlab.com/ansht_121/data-science-projects.git
+cd data-science-projects/sentiment_Analysis_project
 pip install -r requirements.txt
 ```
 

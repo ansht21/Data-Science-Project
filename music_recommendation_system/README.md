@@ -40,8 +40,8 @@ Build a content-based music recommendation system that suggests similar songs ba
 ## Installation
 
 ```bash
-git clone https://gitlab.com/ansht_121/machine-learning-project.git
-cd machine-learning-project/music_recommendation_system
+git clone https://gitlab.com/ansht_121/data-science-projects.git
+cd data-science-projects/music_recommendation_system
 pip install -r requirements.txt
 ```
 

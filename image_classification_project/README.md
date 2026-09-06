@@ -55,8 +55,8 @@ Recognise handwritten digits (0–9) from the MNIST dataset — a foundational c
 
 ```bash
 # Clone the repository
-git clone https://gitlab.com/ansht_121/machine-learning-project.git
-cd machine-learning-project/image_classification_project
+git clone https://gitlab.com/ansht_121/data-science-projects.git
+cd data-science-projects/image_classification_project
 
 # Install dependencies
 pip install -r requirements.txt

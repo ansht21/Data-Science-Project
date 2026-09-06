@@ -56,8 +56,8 @@ Predict the selling price of used cars based on their specifications including y
 ### Option 1: Using pip (Recommended)
 ```bash
 # Clone the repository
-git clone https://gitlab.com/ansht_121/machine-learning-project.git
-cd machine-learning-project/car_price_prediction
+git clone https://gitlab.com/ansht_121/data-science-projects.git
+cd data-science-projects/car_price_prediction
 
 # Install dependencies
 pip install -r requirements.txt

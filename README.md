@@ -1,6 +1,6 @@
 <div align="center">
 
-# Data Science & ML Projects
+# Data Science Projects
 
 ### Eight end-to-end ML projects — led by ride-demand forecasting & churn retention — spanning time series, churn modeling, NLP, deep learning, regression, and recommendation systems
 
@@ -275,7 +275,7 @@ Raw listening data
 ## Repository Structure
 
 ```
-Machine-learning-project/
+data-science-projects/
 ├── uber-trip-demand-analysis/          # Forecasting · SARIMA + K-Means + RF fare model
 ├── subscription-retention-analytics/   # Churn · LogReg + RF, modular pipeline with tests
 │   ├── src/                            # data_processing → modeling → explainability
@@ -306,8 +306,8 @@ Machine-learning-project/
 
 ```bash
 # Clone the repository
-git clone https://gitlab.com/ansht_121/machine-learning-project.git
-cd machine-learning-project
+git clone https://gitlab.com/ansht_121/data-science-projects.git
+cd data-science-projects
 
 # Install dependencies
 pip install numpy pandas matplotlib scikit-learn tensorflow nltk jupyter
