@@ -1,4 +1,4 @@
-# Subscription Retention Analytics — Customer Churn Risk & Revenue-at-Risk Intelligence
+# Subscription Retention Prediction
 
 **Business problem:** A subscription business (real-world telco data, 7,043 customers) is
 losing ~26% of customers. Which customers leave, why, and what does the revenue at risk
