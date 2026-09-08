@@ -23,10 +23,19 @@
 
 ## Overview
 
+### Cross-Listed Analytics & Predictive Projects
+
 | # | Project | Problem Type | Approach | Result |
 |---|---------|--------------|----------|--------|
 | 1 | [Ride Demand and Revenue Forecasting](#1--ride-demand-and-revenue-forecasting) | Time series · Clustering · Regression | SARIMA · K-Means · Random Forest | **R² = 0.972** fare model · **MAPE 8.3%** forecast |
 | 2 | [Subscription Churn Prediction](#2--subscription-churn-prediction--retention-analytics) | Binary classification | LogReg + Random Forest + explainability | **ROC-AUC 0.839** · 80.0% accuracy |
+
+> **Note:** These two projects are cross-listed from the [Data Analytics repository](https://gitlab.com/ansht_121/data-analytics) — the SQL / EDA / dashboard layers live there; this repository contains the full predictive modeling layer.
+
+### Standalone Machine Learning Projects
+
+| # | Project | Problem Type | Approach | Result |
+|---|---------|--------------|----------|--------|
 | 3 | [Image Classification](#3--image-classification--handwritten-digit-recognition) | Multi-class classification | CNN (TensorFlow/Keras) | **98.83%** test accuracy |
 | 4 | [Spam Email Detection](#4--spam-email-detection) | Binary text classification | TF-IDF + Logistic Regression | **96.32%** test accuracy |
 | 5 | [Sales Prediction](#5--sales-prediction) | Regression | Linear Regression | **R² = 0.91** · MSE 2.86 |
