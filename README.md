@@ -14,7 +14,7 @@
 <br/>
 
 [![Profile](https://img.shields.io/badge/GitLab-Profile-FC6D26?style=for-the-badge&logo=gitlab&logoColor=white)](https://gitlab.com/ansht_121)
-[![Portfolio](https://img.shields.io/badge/Portfolio-Live_Site-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://ansh-thakur.netlify.app/)
+[![Portfolio](https://img.shields.io/badge/Portfolio-Live_Site-00C7B7?style=for-the-badge&logo=netlify&logoColor=white)](https://ansh-thakur-netlify.netlify.app/)
 [![Data Analytics](https://img.shields.io/badge/GitLab-Data_Analytics-6C8CFF?style=for-the-badge&logo=gitlab&logoColor=white)](https://gitlab.com/ansht_121/data-analytics)
 
 </div>
@@ -284,7 +284,7 @@ Raw listening data
 ## Repository Structure
 
 ```
-data-science-projects/
+machine-learning-project/
 ├── 01_ride-demand-and-revenue-forecasting/# Forecasting · SARIMA + K-Means + RF fare model
 ├── 02_subscription-retention-prediction/# Churn · LogReg + RF, modular pipeline with tests
 │   ├── src/                            # data_processing → modeling → explainability
@@ -315,8 +315,8 @@ data-science-projects/
 
 ```bash
 # Clone the repository
-git clone https://gitlab.com/ansht_121/data-science-projects.git
-cd data-science-projects
+git clone https://gitlab.com/ansht_121/machine-learning-project.git
+cd machine-learning-project
 
 # Install dependencies
 pip install numpy pandas matplotlib scikit-learn tensorflow nltk jupyter
@@ -375,6 +375,23 @@ jupyter notebook music_recommendation.ipynb
 
 ---
 
+---
+
+## 🤖 How These Models Are Built in the AI Era
+
+Every model in this repository follows the same discipline: **AI accelerates, humans validate.**
+
+| Stage | AI Assists With | My Validation Gate |
+| :--- | :--- | :--- |
+| **Data prep** | Drafting cleaning & feature-engineering logic | Row-count reconciliation, dtype audits, leakage checks (e.g., SARIMA validated on held-out Nov–Dec, never on the training window) |
+| **Modeling** | Baseline code scaffolding | Algorithm matched to problem structure — Linear Regression where the relationship is linear (R² 0.91), Random Forest where it is not |
+| **Evaluation** | Metric summaries | Metrics recomputed from scratch; train/test gaps interpreted, not hidden (sentiment model's weak minority-class recall is reported, not rounded up) |
+| **Explainability** | Drafting interpretation text | Feature importances cross-checked against domain sense before being written into findings |
+
+The principle: **AI is a co-pilot, not an oracle.** It drafts, I verify — a hallucinated evaluation metric or leaky validation split that *looks* right is more dangerous than an obvious failure. Model limitations are documented, not hidden, exactly because AI output can't be trusted on faith.
+
+---
+
 ## Skills Demonstrated
 
 | Area | Techniques |
@@ -406,6 +423,6 @@ jupyter notebook music_recommendation.ipynb
 **Ansh Thakur** — Data Analyst & Machine Learning Practitioner
 
 [![GitLab](https://img.shields.io/badge/GitLab-ansht__121-FC6D26?style=flat&logo=gitlab&logoColor=white)](https://gitlab.com/ansht_121)
-[![Portfolio](https://img.shields.io/badge/Portfolio-Live_Site-00C7B7?style=flat&logo=netlify&logoColor=white)](https://ansh-thakur.netlify.app/)
+[![Portfolio](https://img.shields.io/badge/Portfolio-Live_Site-00C7B7?style=flat&logo=netlify&logoColor=white)](https://ansh-thakur-netlify.netlify.app/)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ansh-thakur-5407192b4/)
 [![Email](https://img.shields.io/badge/Email-D14836?style=flat&logo=gmail&logoColor=white)](mailto:ansht1194@gmail.com)
