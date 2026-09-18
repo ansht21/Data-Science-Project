@@ -72,13 +72,15 @@
 
 > **Honest read:** SARIMA residuals pass Ljung-Box (p = 0.54 / 0.86) — no leftover autocorrelation. The fare model's high R² reflects that distance and duration genuinely determine fare; the value is the *expected vs charged* fare gap as an operational lever, not the score itself.
 
+**How a stakeholder uses this:** ops teams re-time driver incentives to 4:30 PM (before the growth window opens) and position premium fleet for 5–7 PM; the fare model flags routes where charged fares drift below expectation.
+
 📁 [`01_ride-demand-and-revenue-forecasting/`](./01_ride-demand-and-revenue-forecasting/)
 
 ---
 
 ## 2 · Subscription Churn Prediction & Retention Analytics
 
-**Problem:** A subscription business (real-world telco data, 7,043 customers) is losing ~26% of customers. Predict who is at risk, why, and what revenue is on the table.
+**Problem:** A subscription business (real-world telco data, 7,043 customers) is losing ~26% of customers. Predict who is at risk, why, and what revenue is on the table. **The deliverable is a revenue-at-risk ranking that tells the retention team where spend saves the most dollars — month-to-month + fiber-optic customers alone are 72% of the exposure.**
 
 *Cross-listed from the [Data Analytics repo](https://gitlab.com/ansht_121/data-analytics) — the SQL / EDA / Excel dashboard layer lives there; this folder contains the full ML pipeline.*
 
@@ -102,6 +104,8 @@ Telco Customer Churn (7,043 × 21)
 | Random Forest | 0.797 | **0.652** | 0.511 | 0.573 | 0.837 |
 
 > **Honest read:** recall is the metric that matters here — missing a churner costs the full customer value, while a false alarm costs one retention call. Logistic Regression wins on ROC-AUC (0.839) and recall (0.561) despite Random Forest's slight precision edge. Risk scores feed a revenue-at-risk segmentation (`churn_segment_revenue.csv`) rather than stopping at a leaderboard number.
+
+**How a stakeholder uses this:** the retention team gets a ranked call list with revenue exposure per customer — spend prioritised by dollars at risk, not by model score.
 
 📁 [`02_subscription-retention-prediction/`](./02_subscription-retention-prediction/)
 
@@ -139,6 +143,8 @@ Input (28×28×1)
 
 **Key steps:** pixel normalization to `[0,1]` · channel-dimension reshaping · prediction visualization with Matplotlib · model exported to `mnist_model.h5`
 
+**How a stakeholder uses this:** a proof-of-work CNN for OCR intake (form digitisation, cheque processing) — the same architecture transfers to document classification pipelines.
+
 📓 [`image_classification_project/imageclassification.ipynb`](./image_classification_project/imageclassification.ipynb)
 
 ---
@@ -168,6 +174,8 @@ Raw email text
 
 **Why TF-IDF over raw word counts:** it down-weights words appearing across all emails ("the", "and") and up-weights terms that actually distinguish spam from legitimate mail, so the classifier learns from signal rather than noise.
 
+**How a stakeholder uses this:** an email filter tuned for the costlier error — a false positive hides a job offer, so thresholds favour keeping legitimate mail in the inbox.
+
 📓 [`spam_email_detection_project/`](./spam_email_detection_project/)
 
 ---
@@ -196,6 +204,8 @@ Raw sales data
 
 > R² of 0.91 means the model explains 91% of the variance in sales. For a linear model on retail data that's strong — it suggests the relationship between MRP, outlet characteristics and sales is largely linear, so a more complex tree-based model would buy little here.
 
+**How a stakeholder uses this:** inventory planners set stock depth per outlet — the model shows which outlet types justify deeper shelf allocation and which are structurally capped.
+
 📓 [`sales_prediction_project/`](./sales_prediction_project/)
 
 ---
@@ -216,6 +226,8 @@ Vehicle listings data
 ```
 
 **Why Random Forest here:** depreciation isn't linear. A car loses value fastest in its first years and the curve flattens later; mileage interacts with age rather than acting independently. A tree ensemble captures those non-linear interactions without needing them specified in advance — which is precisely why it suits this problem where Linear Regression suited sales prediction.
+
+**How a stakeholder uses this:** a marketplace pricing baseline — sellers get a defensible price band per vehicle instead of gut-feel quotes, reducing time-to-sale.
 
 📓 [`car_price_prediction_project/`](./car_price_prediction_project/)
 
@@ -253,6 +265,8 @@ Stratified 80/20 train-test split preserves class proportions.
 
 **Includes** a `predict_sentiment()` helper for inference on unseen text.
 
+**How a stakeholder uses this:** a brand-monitoring triage layer — positive/neutral posts pass through, likely-negative posts are routed to support for human review.
+
 📓 [`sentiment_Analysis_project/notebooks/sentiment_analysis.ipynb`](./sentiment_Analysis_project/notebooks/sentiment_analysis.ipynb)
 
 ---
@@ -276,6 +290,8 @@ Raw listening data
 ```
 
 **Why content-based:** it sidesteps the cold-start problem — a new song can be recommended immediately from its own attributes, with no listening history needed.
+
+**How a stakeholder uses this:** cold-start-ready recommendations for a growing catalogue — every track is recommendable from day one, before any interaction history exists.
 
 📓 [`music_recommendation_system/notebooks/music_recommendation.ipynb`](./music_recommendation_system/notebooks/music_recommendation.ipynb)
 
