@@ -51,6 +51,9 @@
 
 *Cross-listed from the [Data Analytics repo](https://gitlab.com/ansht_121/data-analytics) — the SQL / Power BI dashboard layer lives there; this folder contains the full predictive modeling layer.*
 
+![Ride Demand Dashboard](./01_ride-demand-and-revenue-forecasting/image/PowerBi_Dashboard.png)
+*Executive Ride Demand & Dynamic Fare Dashboard — Hourly trip surge, vehicle tier revenue efficiency, and airport route analysis.*
+
 ### Pipeline
 
 ```
@@ -83,6 +86,9 @@
 **Problem:** A subscription business (real-world telco data, 7,043 customers) is losing ~26% of customers. Predict who is at risk, why, and what revenue is on the table. **The deliverable is a revenue-at-risk ranking that tells the retention team where spend saves the most dollars — month-to-month + fiber-optic customers alone are 72% of the exposure.**
 
 *Cross-listed from the [Data Analytics repo](https://gitlab.com/ansht_121/data-analytics) — the SQL / EDA / Excel dashboard layer lives there; this folder contains the full ML pipeline.*
+
+![Subscription Churn Dashboard](./02_subscription-retention-prediction/image/Churn_Dashboard_screenshot.png)
+*Executive Customer Churn & Retention Dashboard — KPI cards, risk segmentation by contract/service, and revenue-at-risk analysis.*
 
 ### Pipeline
 
