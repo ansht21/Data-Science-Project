@@ -1,0 +1,25 @@
+stages:
+  - validate
+
+validate-notebooks:
+  stage: validate
+  image: python:3.11-slim
+  script:
+    - pip install nbformat
+    - python -c "
+      import nbformat, glob;
+      notebooks = glob.glob('**/*.ipynb', recursive=True);
+      print(f'Found {len(notebooks)} notebooks');
+      [nbformat.read(nb, as_version=4) for nb in notebooks];
+      print('All notebooks are valid JSON')
+      "
+  only:
+    - main
+    - merge_requests
+
+validate-python:
+  stage: validate
+  image: python:3.11-slim
+  script:
+    - find . -name '*.py' -not -path './.venv/*' | head -20 | xargs -I {} python -m py_compile {}
+  allow_failure: true
