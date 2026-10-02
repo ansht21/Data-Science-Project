@@ -52,7 +52,7 @@ answer / action comment block (same style as the Uber and supply-chain repos).
 
 Open in Excel and click any chart or use the filter dropdowns to explore the data interactively.
 
-![Churn Dashboard](image/Churn_Dashboard_v2.png)
+![Churn Dashboard](image/Churn_Dashboard_screenshot.png)
 *Preview of the Dashboard sheet — KPI cards with four native Excel charts (re-render via `src/render_dashboard_screenshot.py`).*
 
 ---
