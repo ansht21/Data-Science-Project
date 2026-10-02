@@ -151,7 +151,7 @@ Input (28×28×1)
 
 **How a stakeholder uses this:** a proof-of-work CNN for OCR intake (form digitisation, cheque processing) — the same architecture transfers to document classification pipelines.
 
-📓 [`image_classification_project/imageclassification.ipynb`](./image_classification_project/imageclassification.ipynb)
+📓 [`image_classification_project/notebooks/image_classification.ipynb`](./image_classification_project/notebooks/image_classification.ipynb)
 
 ---
 
@@ -312,7 +312,7 @@ machine-learning-project/
 │   ├── src/                            # data_processing → modeling → explainability
 │   └── Churn_Prediction_Analysis.ipynb
 ├── image_classification_project/       # CNN · MNIST digit recognition
-│   └── imageclassification.ipynb
+│   └── notebooks/image_classification.ipynb
 ├── spam_email_detection_project/       # NLP · TF-IDF + Logistic Regression
 ├── sales_prediction_project/           # Regression · Linear Regression
 ├── car_price_prediction_project/       # Regression · Random Forest
@@ -364,7 +364,7 @@ python 02_subscription-retention-prediction/src/run_pipeline.py --help
 **Image Classification** — no setup needed; MNIST downloads automatically on first run.
 
 ```bash
-jupyter notebook image_classification_project/imageclassification.ipynb
+jupyter notebook image_classification_project/notebooks/image_classification.ipynb
 ```
 
 **Spam Detection · Sales Prediction · Car Price Prediction** — open the notebook in each project folder and run all cells.
