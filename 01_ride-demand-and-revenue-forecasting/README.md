@@ -96,6 +96,40 @@ Python-driven exploration of cleaned trip data including:
 
 ---
 
+## Visual Deep-Dive & Model Handbook
+
+*Predictive layer built on the 35,000-trip dataset (EDA/dashboard layer lives in the Data Analytics repo). All figures below are produced by `Forecast_Clustering_Analysis.ipynb`.*
+
+### Model scorecard
+
+| Model | Task | Metric |
+|---|---|---|
+| SARIMA | 14-day demand forecast | **MAPE 8.3%** — the forecast tracks actuals within single digits |
+| Random Forest | Route-level fare prediction | **R² 0.972** — distance/time features explain nearly all fare variance |
+| K-Means | Demand-cell clustering | Pickup cells grouped into demand profiles (`outputs/demand_cluster_cells.csv`) |
+
+### Chart-by-chart walkthrough
+
+**14-Day Demand Forecast** — SARIMA fitted on daily trip counts projected two weeks ahead: the forecast band follows the weekly seasonality (weekday commuter humps, weekend shape) with an 8.3% mean absolute percentage error. Operations use this to pre-position drivers before the evening surge rather than reacting to it.
+
+![14-Day Forecast](image/forecast_14day.png)
+
+**Daily Demand + Residuals** — the fitted-vs-actual demand curve plus the residual diagnostics: residuals scatter around zero with no surviving structure, which is the statistical check that the SARIMA orders actually captured the seasonality instead of overfitting noise.
+
+![Daily Demand](image/forecast_daily_demand.png)
+![Forecast Residuals](image/forecast_residuals.png)
+
+**Demand Cluster Profiles** — K-Means segments pickup cells into demand profiles (e.g., commuter-evening, airport-premium, steady-local). Each cluster gets its own surge/incentive rule instead of one city-wide policy — the operational payoff of the whole forecasting layer.
+
+![Clustering Profiles](image/clustering_profiles.png)
+
+**Supporting EDA visuals** — the hourly demand curve (6 PM peak at 4,053 trips), vehicle revenue split, airport share (39.6% of volume, 54.8% of revenue), zone Pareto and rating-vs-fare views are documented with the same numbers as the analytics layer:
+
+![Hourly Demand](image/uber_hourly_demand.png)
+![Airport Share](image/uber_airport_share.png)
+
+---
+
 ## Core Analytical Insights
 
 ![Correlation Heatmap](image/Ubertrip_heatmap.png)

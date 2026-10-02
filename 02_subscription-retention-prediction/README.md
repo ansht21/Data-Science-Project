@@ -85,6 +85,34 @@ structural, not sampling noise:
 | Monthly revenue at risk (churned) | $139.1K |
 | Avg tenure | 32.4 months |
 
+### KPI Handbook — what each headline number means
+
+| KPI | Value | Definition |
+|---|---|---|
+| Total Customers | **7,032** | Rows after dropping missing `TotalCharges` (7,043 raw) |
+| Churn Rate | **26.6%** | 1,869 churned / 7,032 customers |
+| Avg Tenure | **32.4 months** | Mean months with the provider |
+| Revenue at Risk | **$139.1K** | Sum of `MonthlyCharges` over churned customers |
+| Model Accuracy | **80.0%** | Held-out accuracy (LogReg + Random Forest) |
+| Model ROC-AUC | **0.839** | Held-out ranking quality — the model reliably scores would-be churners above stayers |
+
+### Chart-by-chart walkthrough
+
+**Confusion Matrix + ROC Curve** — the model evaluation pair: the confusion matrix shows where errors concentrate (false positives = wasted retention offers, false negatives = lost customers), and the ROC curve (AUC 0.839) shows strong separation well above the 0.5 diagonal. Threshold choice is a business call: lower it to catch more churners when retention offers are cheap, raise it when offers are expensive.
+
+![Confusion Matrix & ROC](image/churn_cm_roc.png)
+
+**Churn Drivers (feature importance)** — the explainability view: contract type, tenure band and internet service dominate the model, matching the EDA findings (42.7% month-to-month churn, 53.3% 0–6m churn). The model rediscovers the business logic independently, which is why stakeholders trust its ranked customer list.
+
+![Churn Drivers](image/churn_drivers.png)
+
+**Churn by Contract / Tenure / Service** — the EDA foundation the model stands on: 42.7% vs 11.3% vs 2.8% by contract, 53.3% → 9.5% across tenure bands, fiber as the highest-risk service. Full per-chart explanations live in the analytics layer.
+
+![Churn by Contract](image/churn_by_contract.png)
+![Churn by Tenure](image/churn_by_tenure.png)
+
+**Revenue-at-Risk Segments** — M2M + Fiber ≈ $100K of the $139K total exposure (~72%). The model's output is this ranked segment/customer list (`outputs/churn_segment_revenue.csv`), not an accuracy trophy.
+
 ---
 
 ## Business Questions Answered
