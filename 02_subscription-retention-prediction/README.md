@@ -149,11 +149,50 @@ Confusion matrix and ROC curves in `image/churn_cm_roc.png`; driver importances 
 
 ---
 
+## ML Pipeline, Serving & MLOps (`src/`, `app/`, `Dockerfile`, `.github/`)
+
+Reproducible training + scoring layer over the same notebook logic:
+
+```
+02_subscription-retention-prediction/
+├── src/
+│   ├── config.py              # paths, leakage-safe feature policy
+│   ├── data_processing.py     # load + clean (7043 -> 7032 rows)
+│   ├── feature_engineering.py # charge_ratio, tenure_x_monthly, monthly_above_avg
+│   ├── modeling.py            # splits, LogReg/RF, CV, threshold, revenue-at-risk
+│   └── train.py               # MLflow tracking + saves models/churn_model.pkl
+├── app/main.py                # FastAPI: GET /health, POST /predict
+├── tests/                     # pytest: preprocessing + modeling + API smoke
+├── Dockerfile                 # python:3.10-slim, uvicorn on :8000
+└── .github/workflows/churn-ci.yml  # CI runs pytest on push
+```
+
+```bash
+# 1. train (saves models/churn_model.pkl + outputs/churn_model_metrics.csv,
+#    logs to mlruns/ if mlflow is installed, skips tracking if not)
+pip install -r requirements.txt
+python src/train.py
+
+# 2. serve
+uvicorn app.main:app --reload
+curl -X POST localhost:8000/predict -H "Content-Type: application/json" \
+  -d '{"tenure": 5, "MonthlyCharges": 92.0, "Contract": "Month-to-month"}'
+# -> {"churn_probability": ..., "predicted_churn": ..., "risk_band": "High|Medium|Low"}
+
+# 3. test + docker
+pytest tests/ -q
+docker build -t churn-api . && docker run -p 8000:8000 churn-api
+```
+
+---
+
 ## How to Reproduce
 
 ```bash
 pip install -r requirements.txt
-jupyter notebook Churn_EDA_Analysis.ipynb
+jupyter notebook Churn_EDA_Analysis.ipynb   # EDA + statistics
+jupyter notebook Churn_Prediction_Analysis.ipynb  # modeling narrative
+python src/train.py                          # reproducible pipeline + model artifact
 ```
 
 All charts are saved to `image/` and analysis tables to `outputs/` by the notebook itself.

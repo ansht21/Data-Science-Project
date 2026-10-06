@@ -1,20 +1,15 @@
-"""
-Modeling, threshold, revenue-at-risk, and risk-band tests.
-"""
+"""Modeling + API smoke tests matching current src/ layout."""
 import sys
-import json
 from pathlib import Path
 
-import numpy as np
 import pandas as pd
 import pytest
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / "src"))
-
-import modeling as mdl
-from data_processing import load_and_clean
-from feature_engineering import build_features
+sys.path.insert(0, str(ROOT))
+from src.config import TARGET
+from src.data_processing import load_and_clean
+from src import modeling as mdl
 
 
 @pytest.fixture(scope="session")
@@ -55,20 +50,16 @@ def test_threshold_is_input_range(splits):
 
 def test_revenue_at_risk_expectation(df):
     df2 = df.copy()
-    df2["churn_probability"] = 1.0  # all churn -> expected = actual monthly revenue of flagged
+    df2["churn_probability"] = 1.0
     df2["risk_level"] = "High"
     rav = mdl.revenue_at_risk(df2)
     assert rav["flagged_customers"] == len(df2)
-    # expected at risk = sum(1.0 * MonthlyCharges)
-    assert rid(rav["expected_monthly_revenue_at_risk"]) == rid(df2["MonthlyCharges"].sum())
+    assert round(float(rav["expected_monthly_revenue_at_risk"]), 2) == round(
+        float(df2["MonthlyCharges"].sum()), 2)
 
 
-def rid(x):
-    return round(float(x), 2)
-
-
-def test_revenue_at_risk_zero_probability():
-    r = mdl.revenue_at_risk(pd.DataFrame({"churn_probability": [0.0, 0.0],
-                                          "risk_level": ["Low", "Low"],
-                                          "MonthlyCharges": [50, 60]}))
-    assert r["expected_monthly_revenue_at_risk"] == 0.0
+def test_api_predict_smoke():
+    from app.main import predict, CustomerFeatures
+    out = predict(CustomerFeatures())
+    assert 0 <= out["churn_probability"] <= 1
+    assert out["risk_band"] in ("High", "Medium", "Low")

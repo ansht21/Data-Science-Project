@@ -1,0 +1,18 @@
+name: churn-ci
+on:
+  push:
+    paths:
+      - '02_subscription-retention-prediction/**'
+  pull_request:
+    paths:
+      - '02_subscription-retention-prediction/**'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: pip install -r 02_subscription-retention-prediction/requirements.txt pandas numpy scikit-learn pytest joblib
+      - run: pytest 02_subscription-retention-prediction/tests/ -q
