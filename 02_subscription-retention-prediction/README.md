@@ -149,7 +149,7 @@ Confusion matrix and ROC curves in `image/churn_cm_roc.png`; driver importances 
 
 ---
 
-## ML Pipeline, Serving & MLOps (`src/`, `app/`, `Dockerfile`, `.github/`)
+## ML Pipeline, Serving & MLOps (`src/`, `app/`, `Dockerfile`)
 
 Reproducible training + scoring layer over the same notebook logic:
 
@@ -163,8 +163,7 @@ Reproducible training + scoring layer over the same notebook logic:
 │   └── train.py               # MLflow tracking + saves models/churn_model.pkl
 ├── app/main.py                # FastAPI: GET /health, POST /predict
 ├── tests/                     # pytest: preprocessing + modeling + API smoke
-├── Dockerfile                 # python:3.10-slim, uvicorn on :8000
-└── .github/workflows/churn-ci.yml  # CI runs pytest on push
+└── Dockerfile                 # python:3.10-slim, uvicorn on :8000
 ```
 
 ```bash
